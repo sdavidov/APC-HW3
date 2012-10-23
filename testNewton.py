@@ -44,6 +44,12 @@ class TestNewton(unittest.TestCase):
         x = solver.solve(-1.)
         self.assertAlmostEqual(x, 0.209718777537)
 
+    def testNonlinear1DExact(self):
+        poly = F.Polynomial([1,0,0,2,-5,-6,1])        
+        solver = newton.Newton(poly, tol=1.e-12, maxiter=15, dx=1., analyticDF=F.OneDNonlinearExact)
+        x = solver.solve(0.0)
+        self.assertAlmostEqual(x, 0.149220440931)
+
     def test1DPathological(self):
         """Pathological example to break Newton in infinite loop. Newton should quit out once maxiter is reached so as to not wait forever"""
         poly = F.Polynomial([1,0,-2,2])

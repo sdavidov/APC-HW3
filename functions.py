@@ -22,6 +22,9 @@ def TwoDNonlinearExactJacobian(x):
     """Return a matrix that is the exact Jacobian for the above problem, used in tests """
     return N.matrix([[-3*N.power(x[0,0],2.) , 1], [2*x[0,0] , 2*x[1,0]]])
 
+def OneDNonlinearExact(x):
+    return (6*x**5 + 6*x**2 - 10*x - 6)
+
 class Polynomial(object):
     """Callable polynomial object.
 
