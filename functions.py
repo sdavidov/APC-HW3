@@ -20,7 +20,7 @@ def TwoDNonlinear(x):
         
 def TwoDNonlinearExactJacobian(x):
     """Return a matrix that is the exact Jacobian for the above problem, used in tests """
-    return N.matrix([-3*N.power(x[0,0],2.) , 1], [2*x[0,0] , 2*x[1,0]])
+    return N.matrix([[-3*N.power(x[0,0],2.) , 1], [2*x[0,0] , 2*x[1,0]]])
 
 class Polynomial(object):
     """Callable polynomial object.
