@@ -28,11 +28,9 @@ class TestFunctions(unittest.TestCase):
     def testApproxJacobian3(self):
         """Nonlinear test of Jacobian"""
         A = N.matrix("-3. 1.; 2. 6.")
-        def f(x):
-            return N.matrix([[-N.power(x[0,0],3.)+x[1,0]], [N.power(x[0,0],2.)+N.power(x[1,0],2.) - 1.]])
         x0 = N.matrix("1; 3")
         dx = 1.e-8
-        Df_x = F.ApproximateJacobian(f, x0, dx)
+        Df_x = F.ApproximateJacobian(F.TwoDNonlinear, x0, dx)
         self.assertEqual(Df_x.shape, (2,2))
         N.testing.assert_array_almost_equal(Df_x,A)
 

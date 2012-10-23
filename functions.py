@@ -14,6 +14,11 @@ def ApproximateJacobian(f, x, dx=1e-6):
         Df_x[:,i] = (f(x + v) - fx)/dx
     return Df_x
 
+def TwoDNonlinear(x):
+    """Return a vector (column matrix) {-x^3+y;x^2+y^2-1} used in tests"""
+    return N.matrix([[-N.power(x[0,0],3.)+x[1,0]], [N.power(x[0,0],2.)+N.power(x[1,0],2.) - 1.]])
+        
+
 class Polynomial(object):
     """Callable polynomial object.
 
