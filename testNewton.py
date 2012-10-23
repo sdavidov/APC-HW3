@@ -50,6 +50,18 @@ class TestNewton(unittest.TestCase):
         x = solver.solve(0.0)
         self.assertAlmostEqual(x, 0.149220440931)
 
+    def testConvergenceRadiusLinear(self):
+        f = lambda x : 3.1 * x + 31.0
+        solver = newton.Newton(f, tol=1.e-15, maxiter=5, searchRadius=10)
+        try:    
+            x = solver.solve(2.0)
+        except Exception as inst:
+            message, it, x = inst.args
+            validmessage = 'Exceeded search radius, next values: <interation> <current postion>'
+            self.assertEqual(message, validmessage)
+            assert(it < 5)
+            assert(abs(x+10) > 1.5)
+
     def test1DPathological(self):
         """Pathological example to break Newton in infinite loop. Newton should quit out once maxiter is reached so as to not wait forever"""
         poly = F.Polynomial([1,0,-2,2])
