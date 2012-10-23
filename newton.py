@@ -31,7 +31,7 @@ class Newton(object):
         if N.linalg.norm(fx) < self._tol:
             return x
         else:
-            raise Exception('Newton failed to converge with given number of max iterations')
+            raise Exception('Newton failed to converge with given number of max iterations', x)
 
     def step(self, x, fx=None):
         """Take a single step of a Newton method, starting from x
