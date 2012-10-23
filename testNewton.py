@@ -8,7 +8,7 @@ import numpy as N
 class TestNewton(unittest.TestCase):
     def testLinear(self):
         f = lambda x : 3.0 * x + 6.0
-        solver = newton.Newton(f, tol=1.e-15, maxiter=2)
+        solver = newton.Newton(f, tol=1.e-15, maxiter=5)
         x = solver.solve(2.0)
         self.assertEqual(x, -2.0)
 
@@ -21,10 +21,20 @@ class TestNewton(unittest.TestCase):
 
     def testNonlinear1D(self):
         poly = F.Polynomial([1,2,-10,2])
-        f = lambda x : x
         solver = newton.Newton(poly, tol=1.e-12, maxiter=15)
         x = solver.solve(-1.)
         self.assertAlmostEqual(x, 0.209718777537)
 
+    def test1DPathological(self):
+        """Pathological example to break Newton in infinite loop. Newton should quit out once maxiter is reached so as to not wait forever"""
+        poly = F.Polynomial([1,0,-2,2])
+        solver = newton.Newton(poly, tol=1.e-12, maxiter=16)
+        try:            
+            x = solver.solve(0.1)
+        except Exception as inst:
+            message, = inst.args
+            validmessage = 'Newton failed to converge with given number of max iterations'
+            self.assertEqual(message,validmessage)            
+        
 if __name__ == "__main__":
     unittest.main()
