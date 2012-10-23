@@ -62,6 +62,19 @@ class TestNewton(unittest.TestCase):
             assert(it < 5)
             assert(abs(x+10) > 1.5)
 
+    def testSearchRadiusNonlinear2DExact(self):
+        solver = newton.Newton(F.TwoDNonlinear, tol=1.e-12, maxiter=10, dx=1., analyticDF=F.TwoDNonlinearExactJacobian, searchRadius=1)
+        x0 = N.matrix([[1.2],[2.5]])
+        xRoot = N.matrix([[0.826031357654187],[0.563624162161259]])        
+        try:    
+            x = solver.solve(x0)
+        except Exception as inst:
+            message, it, x = inst.args
+            validmessage = 'Exceeded search radius, next values: <interation> <current postion>'
+            self.assertEqual(message, validmessage)
+            assert(it < 10)
+            assert(N.linalg.norm(x-x0) <= 1)
+
     def test1DPathological(self):
         """Pathological example to break Newton in infinite loop. Newton should quit out once maxiter is reached so as to not wait forever"""
         poly = F.Polynomial([1,0,-2,2])
