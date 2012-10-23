@@ -34,6 +34,14 @@ class TestFunctions(unittest.TestCase):
         self.assertEqual(Df_x.shape, (2,2))
         N.testing.assert_array_almost_equal(Df_x,A)
 
+    def testExactJacobianAgainstApprox(self):
+        x0 = N.matrix("1.3; 6.7")
+        dx = 1.e-8
+        Df_x = F.ApproximateJacobian(F.TwoDNonlinear, x0, dx)
+        Df_xExact = F.TwoDNonlinearExactJacobian(x0)
+        self.assertEqual(Df_x.shape,Df_xExact.shape)
+        N.testing.assert_array_almost_equal(Df_x,Df_xExact)
+
     def testPolynomial(self):
         # p(x) = x^2 + 2x + 3
         p = F.Polynomial([1, 2, 3])
