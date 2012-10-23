@@ -19,5 +19,12 @@ class TestNewton(unittest.TestCase):
         x = solver.solve(x0)
         N.testing.assert_array_almost_equal(x, xRoot)
 
+    def testNonlinear1D(self):
+        poly = F.Polynomial([1,2,-10,2])
+        f = lambda x : x
+        solver = newton.Newton(poly, tol=1.e-12, maxiter=15)
+        x = solver.solve(-1.)
+        self.assertAlmostEqual(x, 0.209718777537)
+
 if __name__ == "__main__":
     unittest.main()
