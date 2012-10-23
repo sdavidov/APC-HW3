@@ -18,6 +18,9 @@ def TwoDNonlinear(x):
     """Return a vector (column matrix) {-x^3+y;x^2+y^2-1} used in tests"""
     return N.matrix([[-N.power(x[0,0],3.)+x[1,0]], [N.power(x[0,0],2.)+N.power(x[1,0],2.) - 1.]])
         
+def TwoDNonlinearExactJacobian(x):
+    """Return a matrix that is the exact Jacobian for the above problem, used in tests """
+    return N.matrix([-3*N.power(x[0,0],2.) , 1], [2*x[0,0] , 2*x[1,0]])
 
 class Polynomial(object):
     """Callable polynomial object.
